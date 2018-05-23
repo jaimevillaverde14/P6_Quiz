@@ -196,25 +196,27 @@ exports.randomplay = function(req, res, next) {
 
 exports.randomcheck = function(req, res, next) {
     const {quiz, query} = req;
-    req.session.resolved = req.session.resolved || [];
+
 
     const answer = query.answer || "";
     const a = answer.trim().toLowerCase();
     const b = quiz.answer.toLowerCase().trim();
     const result = a === b;
-    let score;
+
 
     if (result) {
-        req.session.score = req.session.score + 1;
-        score = req.session.score;
-
-        }else {
-        score = req.session.score;
-        req.session.score = 0;
+        req.session.score++;
+        if (req.session.resolved.length === 0) {
+            req.session.resolved === undefined;
+            res.render('quizzes/random_nomore', {score: req.session.score})
+        } else {
+            res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result})
+        }
+    } else {
+    req.session.resolved === undefined;
+    res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result})
     }
-    res.render('quizzes/random_result', {result, score, answer});
-
-    };
+};
 
 
 
