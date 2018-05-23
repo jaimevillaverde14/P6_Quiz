@@ -4,15 +4,18 @@ const router = express.Router();
 const quizController = require('../controllers/quiz');
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index');
+router.get('/', function(req, res, next) {
+    res.render('index');
 });
 
 // Author page.
-router.get('/author', (req, res, next) => {
-    res.render('author');
+router.get('/credits', function(req, res, next) {
+    res.render('credits');
 });
 
+router.get('/quizzes/randomplay',quizController.randomplay);
+
+router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomcheck);
 
 // Autoload for routes using :quizId
 router.param('quizId', quizController.load);
