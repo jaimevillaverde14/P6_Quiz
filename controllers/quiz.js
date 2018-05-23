@@ -198,9 +198,9 @@ exports.randomcheck = (req, res, next) => {
     req.session.resolved = req.session.resolved || [];
 
     const answer = req.query.answer || '';
-    //const a = answer.trim().toLowerCase();
-    //const b = req.quiz.answer.toLowerCase().trim();
-    const result = req.quiz.answer.toLowerCase().trim() === answer.trim().toLowerCase();
+    const ax = answer.trim().toLowerCase();
+    const bx = req.quiz.answer.toLowerCase().trim();
+    const result = bx === ax;
     let score = req.session.resolved.length;
 
     if(result){
