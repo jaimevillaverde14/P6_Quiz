@@ -156,7 +156,7 @@ exports.check = (req, res, next) => {
 
 //RANDOM PLAY
 
-exports.randomplay = function(req, res, next) {
+exports.randomplay = (req, res, next) => {
     if (req.session.resolved === undefined){
         req.session.resolved = [];
     }
@@ -194,7 +194,7 @@ exports.randomplay = function(req, res, next) {
     });
 };
 
-exports.randomcheck = function(req, res, next) {
+exports.randomcheck = (req, res, next) => {
 
     req.session.resolved = req.session.resolved || [];
 
