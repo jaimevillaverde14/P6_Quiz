@@ -9,8 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 // Author page.
-router.get('/credits', function(req, res, next) {
-    res.render('credits');
+router.get('/author', function(req, res, next) {
+    res.render('author');
 });
 
 router.get('/quizzes/randomplay',quizController.randomplay);
