@@ -211,7 +211,7 @@ exports.randomcheck = function(req, res, next) {
             score = req.session.resolved.length;
         }
 
-        models.quizzes.count()
+        models.quiz.count()
         .then (count =>  {
             if (score < count){
                 res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
