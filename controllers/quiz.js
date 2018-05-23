@@ -198,7 +198,7 @@ exports.randomcheck = function(req, res, next) {
 
     req.session.resolved = req.session.resolved || [];
 
-    const answer = req.query.answer || "";
+    const answer = req.query.answer || '';
     const a = answer.trim().toLowerCase();
     const b = quiz.answer.toLowerCase().trim();
     const result = a === b;
@@ -213,17 +213,18 @@ exports.randomcheck = function(req, res, next) {
 
         models.quiz.count()
         .then (count =>  {
-            if (score < count){
-                res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
-            } else {
+            if (count < score){
                 delete req.session.resolved;
-                res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
+                res.render('quizzes/random_result', {result, score, answer});
+
+            } else {
+                res.render('quizzes/random_result', {result, score, answer});
             }
         });
     } else {
         let score = req.session.resolved.length;
         delete req.session.resolved;
-        res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
+        res.render('quizzes/random_result', {result, score, answer});
     }
 };
 
