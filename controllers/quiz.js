@@ -195,8 +195,8 @@ exports.randomplay = function(req, res, next) {
 };
 
 exports.randomcheck = function(req, res, next) {
-    const {quiz, query} = req;
 
+    req.session.resolved = req.session.resolved || [];
 
     const answer = query.answer || "";
     const a = answer.trim().toLowerCase();
@@ -205,16 +205,24 @@ exports.randomcheck = function(req, res, next) {
 
 
     if (result) {
-        req.session.score++;
-        if (req.session.resolved.length === 0) {
-            req.session.resolved === undefined;
-            res.render('quizzes/random_nomore', {score: req.session.score})
-        } else {
-            res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result})
+        if (req.session.resolved.indexOf(req.quiz.id) === -1) {
+            req.session.resolved.push(req.quiz.id);
+            score = req.session.resolved.length;
         }
+
+        models.quizzes.count()
+        .then (count =>  {
+            if (score < count){
+                res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
+            } else {
+                delete req.session.resolved;
+                res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
+            }
+        });
     } else {
-    req.session.resolved === undefined;
-    res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result})
+        let score = req.session.resolved.length;
+        delete req.session.resolved;
+        res.render('quizzes/random_result', {answer: answer, score: req.session.score, result: result});
     }
 };
 
