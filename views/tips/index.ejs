@@ -5,12 +5,13 @@
 
         <% var accepted = tip.accepted; %>
         <% var isAdmin = session.user && session.user.isAdmin; %>
-    <% var isQuizAuthor = session.user && quizAuthorId && quizAuthorId === session.user.id; %>1º
+    <% var isQuizAuthor = session.user && quizAuthorId && quizAuthorId === session.user.id; %>
 
         <% if (accepted || isAdmin || isQuizAuthor ) { %>
 
             <li>
-                <%= tip.text %> (by <%=tip.author ? tip.author.username : "Anonymous"%>
+                <%= tip.text %>
+                (by <%=tip.author ? tip.author.username : 'Anonymous' %>)
 
                 <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
 
