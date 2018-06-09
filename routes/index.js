@@ -127,14 +127,26 @@ router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomcheck);
 router.post('/quizzes/:quizId(\\d+)/tips',
     sessionController.loginRequired,
     tipController.create);
+
 router.put('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)/accept',
     sessionController.loginRequired,
     quizController.adminOrAuthorRequired,
     tipController.accept);
+
 router.delete('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)',
     sessionController.loginRequired,
     quizController.adminOrAuthorRequired,
     tipController.destroy);
+
+router.get('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)/editt',
+    sessionController.loginRequired,
+    quizController.adminOrAuthorRequired,
+    tipController.edit);
+
+router.put('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)',
+    sessionController.loginRequired,
+    quizController.adminOrAuthorRequired,
+    tipController.update);
 
 
 module.exports = router;
