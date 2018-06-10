@@ -17,6 +17,19 @@ exports.load = (req, res, next, tipId) => {
     .catch(error => next(error));
 };
 
+exports.adminOrAuthorRequired = (req, res, next) => {
+
+    const isAdmin  = !!req.session.user.isAdmin;
+    const isAuthor = req.quiz.authorId === req.session.user.id;
+
+    if (isAdmin || isAuthor) {
+        next();
+    } else {
+        console.log('Prohibited operation: The logged in user is not the author of the quiz, nor an administrator.');
+        res.send(403);
+    }
+};
+
 
 // POST /quizzes/:quizId/tips
 exports.create = (req, res, next) => {
@@ -88,7 +101,7 @@ exports.update = (req, res, next) => {
 
     const {quiz, tip, body} = req;
 
-    tip.text =body.text;
+    tip.text = body.text;
     tip.accepted= false;
 
 
@@ -108,16 +121,5 @@ exports.update = (req, res, next) => {
         });
 };
 
-exports.adminOrAuthorRequired = (req, res, next) => {
 
-    const isAdmin  = !!req.session.user.isAdmin;
-    const isAuthor = req.quiz.authorId === req.session.user.id;
-
-    if (isAdmin || isAuthor) {
-        next();
-    } else {
-        console.log('Prohibited operation: The logged in user is not the author of the quiz, nor an administrator.');
-        res.send(403);
-    }
-};
 
